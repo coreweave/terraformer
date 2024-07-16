@@ -32,7 +32,7 @@ func (g *BusinessServiceGenerator) createBusinessServiceResources(client *pagerd
 	for _, service := range resp.BusinessServices {
 		g.Resources = append(g.Resources, terraformutils.NewSimpleResource(
 			service.ID,
-			service.Name,
+			service.ID, // ID as resource name because it does NOT change if the name of the resource changes.
 			"pagerduty_business_service",
 			g.ProviderName,
 			[]string{},

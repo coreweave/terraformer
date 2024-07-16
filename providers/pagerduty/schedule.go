@@ -15,8 +15,6 @@
 package pagerduty
 
 import (
-	"fmt"
-
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
 	pagerduty "github.com/heimweh/go-pagerduty/pagerduty"
 )
@@ -38,7 +36,7 @@ func (g *ScheduleGenerator) createScheduleResources(client *pagerduty.Client) er
 		for _, schedule := range resp.Schedules {
 			g.Resources = append(g.Resources, terraformutils.NewSimpleResource(
 				schedule.ID,
-				fmt.Sprintf("schedule_%s", schedule.Name),
+				schedule.ID, // ID as resource name because it does NOT change if the name of the resource changes.
 				"pagerduty_schedule",
 				g.ProviderName,
 				[]string{},

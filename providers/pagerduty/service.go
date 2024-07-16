@@ -16,7 +16,6 @@ package pagerduty
 
 import (
 	"fmt"
-
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
 	pagerduty "github.com/heimweh/go-pagerduty/pagerduty"
 )
@@ -38,7 +37,7 @@ func (g *ServiceGenerator) createServiceResources(client *pagerduty.Client) erro
 		for _, service := range resp.Services {
 			g.Resources = append(g.Resources, terraformutils.NewSimpleResource(
 				service.ID,
-				fmt.Sprintf("service_%s", service.Name),
+				service.ID, // ID as resource name because it does NOT change if the name of the resource changes.
 				"pagerduty_service",
 				g.ProviderName,
 				[]string{},

@@ -15,6 +15,9 @@
 package pagerduty
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
 	pagerduty "github.com/heimweh/go-pagerduty/pagerduty"
 )
@@ -29,4 +32,13 @@ func (s *PagerDutyService) Client() (*pagerduty.Client, error) {
 		return nil, err
 	}
 	return client, nil
+}
+
+func (s *PagerDutyService) FormatResourceName(resourcePrefix string, underlyingName string) (string) {
+	name := strings.Replace(underlyingName, " ", "_", -1)
+	if resourcePrefix == "" {
+		return name
+	} else {
+		return fmt.Sprintf("%s_%s", resourcePrefix, name)
+	}
 }

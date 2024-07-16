@@ -32,7 +32,7 @@ func (g *RulesetGenerator) createRulesetResources(client *pagerduty.Client) erro
 	for _, ruleset := range resp.Rulesets {
 		g.Resources = append(g.Resources, terraformutils.NewSimpleResource(
 			ruleset.ID,
-			ruleset.Name,
+			ruleset.ID, // ID as resource name because it does NOT change if the name of the resource changes.
 			"pagerduty_ruleset",
 			g.ProviderName,
 			[]string{},
